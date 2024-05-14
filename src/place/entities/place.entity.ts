@@ -36,5 +36,6 @@ export class Place {
   // Define one-to-many relationship with images
   // Define one-to-many relationship with images
   @OneToMany(() => Image, (image) => image.place, { nullable: true })
+  @Field(() => [Image], { nullable: true })
   images: Image[];
 }

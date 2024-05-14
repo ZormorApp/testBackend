@@ -16,6 +16,7 @@ type Place {
   latitude: String!
   longitude: String!
   open_hours: String!
+  images: [Image!]
 }
 
 type User {
