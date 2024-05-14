@@ -27,7 +27,7 @@ export class CreatePlaceInput {
   @IsNotEmpty()
   @IsString()
   @Field()
-  longititude: string;
+  longitude: string;
 
   @IsNotEmpty()
   @Field()
