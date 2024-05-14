@@ -7,6 +7,7 @@ import { join } from 'path';
 import { PlaceModule } from './place/place.module';
 import { UserModule } from './user/user.module';
 import { DataSource } from 'typeorm';
+import { ImageModule } from './image/image.module';
 
 @Module({
   imports: [
@@ -34,6 +35,7 @@ import { DataSource } from 'typeorm';
     }),
     PlaceModule,
     UserModule,
+    ImageModule,
   ],
   controllers: [],
   providers: [],

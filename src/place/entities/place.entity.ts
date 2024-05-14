@@ -1,5 +1,6 @@
 import { ObjectType, Field, ID } from '@nestjs/graphql';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Image } from 'src/image/entities/image.entity';
 
 @Entity()
 @ObjectType('Place')
@@ -32,7 +33,8 @@ export class Place {
   @Field()
   open_hours: string;
 
-  @Column()
-  @Field()
-  createdAt: string;
+  // Define one-to-many relationship with images
+  // Define one-to-many relationship with images
+  @OneToMany(() => Image, (image) => image.place, { nullable: true })
+  images: Image[];
 }
