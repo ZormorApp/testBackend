@@ -12,15 +12,15 @@ export class PlaceService {
     return `This action returns all place`;
   }
 
-  findOne(id: number) {
+  findOne(id: string) {
     return `This action returns a #${id} place`;
   }
 
-  update(id: number, updatePlaceInput: UpdatePlaceInput) {
+  update(id: string, updatePlaceInput: UpdatePlaceInput) {
     return `This action updates a #${id} place`;
   }
 
-  remove(id: number) {
+  remove(id: string) {
     return `This action removes a #${id} place`;
   }
 }

@@ -1,9 +1,9 @@
 import { IsUUID } from 'class-validator';
-import { CreatePlaceInput } from './create-place.input';
+import { CreateImageInput } from './create-image.input';
 import { InputType, Field, PartialType, ID } from '@nestjs/graphql';
 
 @InputType()
-export class UpdatePlaceInput extends PartialType(CreatePlaceInput) {
+export class UpdateImageInput extends PartialType(CreateImageInput) {
   @Field(() => ID)
   @IsUUID('4', { each: true })
   id: string;

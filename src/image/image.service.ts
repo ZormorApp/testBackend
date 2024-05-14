@@ -16,7 +16,7 @@ export class ImageService {
     return `This action returns a #${id} image`;
   }
 
-  update(id: number, updateImageInput: UpdateImageInput) {
+  update(id: string, updateImageInput: UpdateImageInput) {
     return `This action updates a #${id} image`;
   }
 

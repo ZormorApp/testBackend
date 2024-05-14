@@ -2,6 +2,12 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Image {
+  id: Float!
+  filename: String!
+  place: Place!
+}
+
 type Place {
   id: ID!
   name: String!
@@ -10,7 +16,6 @@ type Place {
   latitude: String!
   longitude: String!
   open_hours: String!
-  createdAt: String!
 }
 
 type User {
@@ -21,37 +26,61 @@ type User {
 }
 
 type Query {
-  place(id: Int!): Place!
+  place(id: String!): Place!
   user(id: Int!): User!
+  image(id: Int!): Image!
 }
 
 type Mutation {
   createPlace(createPlaceInput: CreatePlaceInput!): Place!
   updatePlace(updatePlaceInput: UpdatePlaceInput!): Place!
-  removePlace(id: Int!): Place!
+  removePlace(id: String!): Place!
   createUser(createUserInput: CreateUserInput!): User!
   updateUser(updateUserInput: UpdateUserInput!): User!
   removeUser(id: Int!): User!
+  createImage(createImageInput: CreateImageInput!): Image!
+  updateImage(updateImageInput: UpdateImageInput!): Image!
+  removeImage(id: Int!): Image!
 }
 
 input CreatePlaceInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  name: String!
+  description: String!
+  location: String!
+  latitude: String!
+  longitude: String!
+  open_hours: String!
 }
 
 input UpdatePlaceInput {
-  """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
+  name: String
+  description: String
+  location: String
+  latitude: String
+  longitude: String
+  open_hours: String
+  id: ID!
 }
 
 input CreateUserInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  email: String!
+  password: String!
 }
 
 input UpdateUserInput {
-  """Example field (placeholder)"""
-  exampleField: Int
+  email: String
+  password: String
   id: Int!
+}
+
+input CreateImageInput {
+  filename: String!
+  placeId: String!
+}
+
+input UpdateImageInput {
+  filename: String
+  placeId: String
+  id: ID!
+  file: String!
 }
