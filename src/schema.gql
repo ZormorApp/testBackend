@@ -1,0 +1,57 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Place {
+  id: ID!
+  name: String!
+  description: String!
+  location: String!
+  latitude: String!
+  longitude: String!
+  open_hours: String!
+  createdAt: String!
+}
+
+type User {
+  id: ID!
+  email: String!
+  is_admin: Boolean
+  password: String!
+}
+
+type Query {
+  place(id: Int!): Place!
+  user(id: Int!): User!
+}
+
+type Mutation {
+  createPlace(createPlaceInput: CreatePlaceInput!): Place!
+  updatePlace(updatePlaceInput: UpdatePlaceInput!): Place!
+  removePlace(id: Int!): Place!
+  createUser(createUserInput: CreateUserInput!): User!
+  updateUser(updateUserInput: UpdateUserInput!): User!
+  removeUser(id: Int!): User!
+}
+
+input CreatePlaceInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdatePlaceInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
+
+input CreateUserInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdateUserInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
