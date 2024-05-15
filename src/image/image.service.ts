@@ -24,26 +24,24 @@ export class ImageService {
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: number): Promise<Image> { // Updated 'id' parameter type to string
-    return this.imageRepository.findOne({ where: { id } }); // No need for parseInt here
+  async findOne(@Param('id') id: number): Promise<Image> { 
+    return this.imageRepository.findOne({ where: { id } }); 
   }
 
   @Put(':id')
-  async update(@Param('id') id: number, @Body() updateImageInput: UpdateImageInput): Promise<Image> { // Updated 'id' parameter type to string
-    const imageToUpdate = await this.imageRepository.findOne({ where: { id } }); // No need for parseInt here
+  async update(@Param('id') id: number, @Body() updateImageInput: UpdateImageInput): Promise<Image> { 
+    const imageToUpdate = await this.imageRepository.findOne({ where: { id } }); 
     if (!imageToUpdate) {
       throw new Error(`Image with ID ${id} not found`);
     }
 
-    // Update image properties
     Object.assign(imageToUpdate, updateImageInput);
-
     return this.imageRepository.save(imageToUpdate);
   }
 
   @Delete(':id')
-  async remove(@Param('id') id: number): Promise<void> { // Updated 'id' parameter type to string
-    const imageToRemove = await this.imageRepository.findOne({ where: { id } }); // No need for parseInt here
+  async remove(@Param('id') id: number): Promise<void> { 
+    const imageToRemove = await this.imageRepository.findOne({ where: { id } }); 
     if (!imageToRemove) {
       throw new Error(`Image with ID ${id} not found`);
     }

@@ -3,21 +3,19 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { join } from 'path';
 import { PlaceModule } from './place/place.module';
 import { UserModule } from './user/user.module';
-import { Place } from './place/entity/place.entity';
-import { User } from './user/entities/user.entity';
-
-import { Image } from './image/entities/image.entity';
 import { ImageModule } from './image/image.module';
+import { User } from './user/entities/user.entity';
+import { Place } from './place/entity/place.entity';
+import { Image } from './image/entities/image.entity';
 
 
 @Module({
   imports: [
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
-      autoSchemaFile: './schema.gql',
+      autoSchemaFile: 'src/schema.gql',
     }),
     ConfigModule.forRoot(),
     TypeOrmModule.forRoot({
@@ -34,12 +32,14 @@ import { ImageModule } from './image/image.module';
       type: 'postgres',
       host: 'localhost',
       port: 5432,
-      password: '220495',
+      password: 'zormor',
       username: 'postgres',
-      entities: ['dist/**/*.entity{.ts,..js'],
-      database: 'backend-db',
+      // entities: [__dirname + '/../**/*.entity.{js,ts}'],
+      entities: [User, Place, Image],
+      database: 'zormor',
       synchronize: true,
       logging: true,
+      autoLoadEntities: true
     }),
     PlaceModule,
     UserModule,

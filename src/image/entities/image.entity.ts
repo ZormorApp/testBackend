@@ -1,12 +1,12 @@
 import { Entity, Column, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { Field, ObjectType } from '@nestjs/graphql';
+import { Field, Int, ObjectType } from '@nestjs/graphql';
 import { Place } from 'src/place/entity/place.entity';
 
-@ObjectType('Image')
+@ObjectType('image')
 @Entity()
 export class Image {
   @PrimaryGeneratedColumn()
-  @Field()
+  @Field(()=>Int)
   id: number;
 
   @Column()

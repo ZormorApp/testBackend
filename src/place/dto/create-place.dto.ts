@@ -3,6 +3,7 @@ import { IsNotEmpty, IsString, Length } from 'class-validator';
 
 @InputType()
 export class PlaceDto {
+  @IsNotEmpty()
   @Field(() => Int)
   id: number;
 
@@ -17,9 +18,8 @@ export class PlaceDto {
   @Field()
   description: string;
 
-  @IsNotEmpty()
   @IsString()
-  @Field()
+  @Field({nullable: true})
   location: string;
 
   @IsString()

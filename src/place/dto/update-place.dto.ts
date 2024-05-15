@@ -1,8 +1,13 @@
-import { InputType, Field } from '@nestjs/graphql';
+import { InputType, Field, Int } from '@nestjs/graphql';
+import { IsUUID } from 'class-validator';
 // import { GraphQLUpload } from 'graphql-upload';
 
 @InputType()
 export class UpdatePlaceDto {
+@Field(()=> Int)
+@IsUUID()
+id: number;
+
   @Field({ nullable: true })
   name?: string;
 

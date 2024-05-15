@@ -37,6 +37,4 @@ export class PlaceController {
         return this.placeService.remove(id)
     }
 
-
-
 }
