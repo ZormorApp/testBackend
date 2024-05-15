@@ -5,48 +5,47 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { join } from 'path';
 import { PlaceModule } from './place/place.module';
-
-import { DataSource } from 'typeorm';
 import { UserModule } from './user/user.module';
+import { Place } from './place/entity/place.entity';
+import { User } from './user/entities/user.entity';
+
+import { Image } from './image/entities/image.entity';
+import { ImageModule } from './image/image.module';
 
 
 @Module({
   imports: [
     GraphQLModule.forRoot<ApolloDriverConfig>({
-      autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
       driver: ApolloDriver,
-      context: ({ req }) => ({ req }),
+      autoSchemaFile: './schema.gql',
     }),
     ConfigModule.forRoot(),
-    TypeOrmModule.forRootAsync({
-      imports: [ConfigModule],
-      inject: [ConfigService],
-      useFactory: async (configService: ConfigService) => ({
-        type: 'postgres',
-        url: configService.get('DATABASE_URL'),
-        // host: configService.get('DB_HOST'),
-        // port: +configService.get('DB_PORT'),
-        // username: configService.get('DB_USERNAME'),
-        // password: configService.get('DB_PASSWORD'),
-        // database: configService.get('DB_DATABASE'),
-        // autoLoadEntities: true,
-        synchronize: true,
-        entities: [join(process.cwd(), 'dist/**/*.entity.js')],
-      }),
+    TypeOrmModule.forRoot({
+      // type: 'postgres',
+      // host: '172.187.177.240',
+      // port: 5050,
+      // password: 'zormor-demo',
+      // username: 'zormor-demo',
+      // entities: [Place, User],
+      // database: 'zormor-demo',
+      // synchronize: true,
+      // logging: true,
+
+      type: 'postgres',
+      host: 'localhost',
+      port: 5432,
+      password: '220495',
+      username: 'postgres',
+      entities: ['dist/**/*.entity{.ts,..js'],
+      database: 'backend-db',
+      synchronize: true,
+      logging: true,
     }),
     PlaceModule,
     UserModule,
-    // UserModule,
-    // ImageModule,
+    ImageModule,
   ],
   controllers: [],
   providers: [],
 })
-export class AppModule {
-  constructor(private dataSource: DataSource) {
-    console.log(dataSource);
-  }
-  configure() {
-    console.log('Started ..... ');
-  }
-}
+export class AppModule {}

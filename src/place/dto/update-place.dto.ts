@@ -1,8 +1,26 @@
+import { InputType, Field } from '@nestjs/graphql';
+// import { GraphQLUpload } from 'graphql-upload';
+
+@InputType()
 export class UpdatePlaceDto {
-    name?: string;
-    description?: string;
-    location?: string;
-    latitude?: string;
-    longitude?: string;
-    hours?: string;
+  @Field({ nullable: true })
+  name?: string;
+
+  @Field({ nullable: true })
+  description?: string;
+
+  @Field({ nullable: true })
+  location?: string;
+
+  @Field({ nullable: true })
+  latitude?: string;
+
+  @Field({ nullable: true })
+  longitude?: string;
+
+  @Field({ nullable: true })
+  hours?: string;
+
+  // @Field(() => GraphQLUpload)
+  // file?: Promise<GraphQLUpload>;
 }
