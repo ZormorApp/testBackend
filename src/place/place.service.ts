@@ -26,7 +26,7 @@ export class PlaceService {
     }
    
     async getOne(id: number):Promise<Place | undefined> {
-        return this.placeRepository.findOne(id)
+        return this.placeRepository.findOneBy({id})
     } 
 
     async create(createPlaceDto: CreatePlaceDto): Promise<FindPlaceDto> {
@@ -36,7 +36,7 @@ export class PlaceService {
     }
 
     async update(id: number, updatePlaceDto: UpdatePlaceDto): Promise<Place> {
-        const placeUpdate = await this.placeRepository.findOne(id);
+        const placeUpdate = await this.placeRepository.findOneBy({id});
 
         if(!placeUpdate) {
             return undefined;
@@ -55,7 +55,7 @@ export class PlaceService {
     }
 
     async remove(id: number): Promise<void> {
-        const placeToRemove = await this.placeRepository.findOne(id)
+        const placeToRemove = await this.placeRepository.findOneBy({id})
 
         if (!placeToRemove) {
             throw new NotFoundException (`Place with ID ${id} not found`)

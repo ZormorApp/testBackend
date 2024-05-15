@@ -5,22 +5,22 @@ export class Place {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({type: 'varchar', length: 40})
   name: string;
 
-  @Column()
+  @Column({type: 'varchar', length: 40})
   description: string;
 
-  @Column()
+  @Column({type: 'varchar', length: 140})
   location: string;
 
-  @Column()
+  @Column({type: 'float', length: 30})
   latitude: string;
 
-  @Column()
+  @Column({type: 'float', length: 30})
   longitude: string;
 
-  @Column()
+  @Column({type:  'varchar', })
   hours: string;
 
 }
