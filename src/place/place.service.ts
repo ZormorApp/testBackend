@@ -1,15 +1,19 @@
 import { Injectable } from '@nestjs/common';
 import { CreatePlaceInput } from './dto/create-place.input';
 import { UpdatePlaceInput } from './dto/update-place.input';
+import { Place } from './place.entity';
 
 @Injectable()
 export class PlaceService {
-  create(createPlaceInput: CreatePlaceInput) {
-    return 'This action adds a new place';
+  constructor(@InjectRepository(Place)private placeRepository:Repository<place>){}
+
+  create(createPlaceInput:createPlaceInput): Promise<Place> {
+    const newPlace = this.placeRepository.create(createPlaceInput);
+    return this.placeRepository.save(newPlace);
   }
 
-  findAll() {
-    return `This action returns all place`;
+  async findAll():Promise<[place]> {
+    return this.placeRepository.find();//SELECT * places
   }
 
   findOne(id: string) {
