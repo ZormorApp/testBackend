@@ -18,17 +18,29 @@ type place {
   images: [image!]
 }
 
-type user {
+type User {
   id: Int!
   email: String!
-  is_admin: Boolean
+  role: UserRole!
+  password: String!
+}
+
+enum UserRole {
+  ADMIN
+  USER
+}
+
+input UserInput {
+  id: Int!
+  email: String!
+  role: UserRole!
   password: String!
 }
 
 type Query {
   places: [place!]!
   place(id: Float!): place!
-  user(id: Int!): user!
+  user(id: Int!): User!
   image(id: Int!): image!
 }
 
@@ -36,9 +48,9 @@ type Mutation {
   createPlace(createPlaceInput: PlaceDto!): place!
   updatePlace(updatePlaceInput: UpdatePlaceDto!): place!
   removePlace(id: Float!): place!
-  createUser(createUserInput: CreateUserInput!): user!
-  updateUser(updateUserInput: UpdateUserInput!): user!
-  removeUser(id: Int!): user!
+  createUser(createUserDto: CreateUserDto!): User!
+  updateUser(updateUserDto: UpdateUserDto!): User!
+  removeUser(id: Int!): User!
   createImage(createImageInput: CreateImageInput!): image!
   updateImage(updateImageInput: UpdateImageInput!): image!
   removeImage(id: Int!): image!
@@ -64,14 +76,16 @@ input UpdatePlaceDto {
   hours: String
 }
 
-input CreateUserInput {
+input CreateUserDto {
   email: String!
   password: String!
+  role: UserRole
 }
 
-input UpdateUserInput {
+input UpdateUserDto {
   email: String
   password: String
+  role: UserRole
   id: Int!
 }
 

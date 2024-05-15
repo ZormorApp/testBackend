@@ -31,9 +31,9 @@ import { Image } from './image/entities/image.entity';
 
       type: 'postgres',
       host: 'localhost',
-      port: 5432,
+      port: 5050,
       password: 'zormor',
-      username: 'postgres',
+      username: 'zormor',
       // entities: [__dirname + '/../**/*.entity.{js,ts}'],
       entities: [User, Place, Image],
       database: 'zormor',

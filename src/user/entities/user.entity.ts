@@ -1,9 +1,20 @@
-import { ObjectType, Field, ID, Int } from '@nestjs/graphql';
+import { ObjectType, Field, Int, InputType, registerEnumType } from '@nestjs/graphql';
+import { BaseEntity } from 'src/base-entity';
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity()
-@ObjectType('user')
-export class User {
+export enum UserRole {
+    ADMIN = 'admin',
+    USER = 'user'
+}
+
+registerEnumType(UserRole, {
+  name: 'UserRole',
+});
+
+@Entity('users')
+@ObjectType()
+@InputType('UserInput')
+export class User extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   @Field((type) => Int)
   id: number;
@@ -12,9 +23,9 @@ export class User {
   @Field()
   email: string;
 
-  @Column({ nullable: true, default: false })
-  @Field({ nullable: true })
-  is_admin: boolean;
+  @Column({ type: 'enum', enum: UserRole, default: UserRole.USER })
+  @Field(() => UserRole)
+  role: UserRole;
 
   @Column()
   @Field()
