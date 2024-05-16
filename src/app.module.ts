@@ -8,7 +8,7 @@ import { PlaceModule } from './place/place.module';
 import { UserModule } from './user/user.module';
 import { DataSource } from 'typeorm';
 import { ImageModule } from './image/image.module';
-
+import { AuthModule } from './auth/auth.module';
 @Module({
   imports: [
     GraphQLModule.forRoot<ApolloDriverConfig>({
@@ -23,12 +23,12 @@ import { ImageModule } from './image/image.module';
       useFactory: async (configService: ConfigService) => ({
         type: 'postgres',
         url: configService.get('DATABASE_URL'),
-        // host: configService.get('DB_HOST'),
-        // port: +configService.get('DB_PORT'),
-        // username: configService.get('DB_USERNAME'),
-        // password: configService.get('DB_PASSWORD'),
-        // database: configService.get('DB_DATABASE'),
-        // autoLoadEntities: true,
+        host: 'localhost',
+        port: 5432,
+        username: 'postgres',
+        password: 'assmae',
+        database: 'postgres',
+        autoLoadEntities: true,
         synchronize: true,
         entities: [join(process.cwd(), 'dist/**/*.entity.js')],
       }),
@@ -36,6 +36,7 @@ import { ImageModule } from './image/image.module';
     PlaceModule,
     UserModule,
     ImageModule,
+    AuthModule
   ],
   controllers: [],
   providers: [],
