@@ -1,4 +1,5 @@
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
+import { DataSource } from 'typeorm';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
@@ -6,13 +7,13 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { join } from 'path';
 import { PlaceModule } from './place/place.module';
 import { UserModule } from './user/user.module';
-import { DataSource } from 'typeorm';
 import { ImageModule } from './image/image.module';
 
 @Module({
   imports: [
     GraphQLModule.forRoot<ApolloDriverConfig>({
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+      playground: true,
       driver: ApolloDriver,
       context: ({ req }) => ({ req }),
     }),
@@ -22,13 +23,12 @@ import { ImageModule } from './image/image.module';
       inject: [ConfigService],
       useFactory: async (configService: ConfigService) => ({
         type: 'postgres',
-        url: configService.get('DATABASE_URL'),
-        // host: configService.get('DB_HOST'),
-        // port: +configService.get('DB_PORT'),
-        // username: configService.get('DB_USERNAME'),
-        // password: configService.get('DB_PASSWORD'),
-        // database: configService.get('DB_DATABASE'),
-        // autoLoadEntities: true,
+        host: configService.get<string>('POSTGRES_HOST'),
+        port: configService.get<number>('POSTGRES_PORT'), 
+        username: configService.get<string>('POSTGRES_USER'), 
+        password: configService.get<string>('POSTGRES_PASSWORD'), 
+        database: configService.get<string>('POSTGRES_DATABASE'),  
+        autoLoadEntities: true,
         synchronize: true,
         entities: [join(process.cwd(), 'dist/**/*.entity.js')],
       }),
@@ -41,10 +41,11 @@ import { ImageModule } from './image/image.module';
   providers: [],
 })
 export class AppModule {
-  constructor(private dataSource: DataSource) {
-    console.log(dataSource);
+  constructor(private readonly dataSource: DataSource) {
+    console.log(this.dataSource);
   }
+
   configure() {
-    console.log('Started ..... ');
+    console.log('AppModule configured');
   }
 }
