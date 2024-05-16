@@ -26,7 +26,7 @@ import { AuthModule } from './auth/auth.module';
         host: 'localhost',
         port: 5432,
         username: 'postgres',
-        password: 'assmae',
+        password: 'password',
         database: 'postgres',
         autoLoadEntities: true,
         synchronize: true,
