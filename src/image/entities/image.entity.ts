@@ -1,13 +1,14 @@
 import { Entity, Column, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { Field, Int, ObjectType } from '@nestjs/graphql';
+import { Field, ObjectType } from '@nestjs/graphql';
 import { Place } from 'src/place/entity/place.entity';
+import { BaseEntity } from 'src/base-entity';
 
 @ObjectType('image')
 @Entity()
-export class Image {
-  @PrimaryGeneratedColumn()
-  @Field(()=>Int)
-  id: number;
+export class Image extends BaseEntity {
+  // @PrimaryGeneratedColumn()
+  // @Field(()=>Int)
+  // id: number;
 
   @Column()
   @Field()

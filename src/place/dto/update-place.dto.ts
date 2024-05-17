@@ -1,12 +1,14 @@
 import { InputType, Field, Int } from '@nestjs/graphql';
 import { IsUUID } from 'class-validator';
-// import { GraphQLUpload } from 'graphql-upload';
+import * as GraphQLUpload from 'graphql-upload/GraphQLUpload.js';
+import * as Upload from 'graphql-upload/Upload.js'
+import { BaseEntity } from 'src/base-entity';
 
 @InputType()
-export class UpdatePlaceDto {
-@Field(()=> Int)
-@IsUUID()
-id: number;
+export class UpdatePlaceDto extends BaseEntity {
+// @Field(()=> Int)
+// @IsUUID()
+// id: number;
 
   @Field({ nullable: true })
   name?: string;
@@ -26,6 +28,6 @@ id: number;
   @Field({ nullable: true })
   hours?: string;
 
-  // @Field(() => GraphQLUpload)
-  // file?: Promise<GraphQLUpload>;
+  @Field(() => GraphQLUpload, {nullable: true, description: 'image file'}) 
+  imageFile?: Upload
 }

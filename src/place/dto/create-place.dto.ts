@@ -1,11 +1,14 @@
 import { Field, InputType, Int } from '@nestjs/graphql';
 import { IsNotEmpty, IsString, Length } from 'class-validator';
+import * as GraphQLUpload from 'graphql-upload/GraphQLUpload.js';
+import * as Upload from 'graphql-upload/Upload.js'
+import { BaseEntity } from 'src/base-entity';
 
 @InputType()
-export class PlaceDto {
-  @IsNotEmpty()
-  @Field(() => Int)
-  id: number;
+export class PlaceDto extends BaseEntity {
+  // @IsNotEmpty()
+  // @Field(() => Int)
+  // id: number;
 
   @IsNotEmpty()
   @IsString()
@@ -34,6 +37,6 @@ export class PlaceDto {
   @Field()
   hours: string;
 
-  // @Field(() => UploadImageInput) 
-  // image: UploadImageInput;
+  @Field(() => GraphQLUpload, {nullable: true, description: 'image file'}) 
+  imageFile?: Upload
 }

@@ -10,37 +10,40 @@ import { User } from './user/entities/user.entity';
 import { Place } from './place/entity/place.entity';
 import { Image } from './image/entities/image.entity';
 
-
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: ['.env'], 
+    }),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: 'src/schema.gql',
     }),
-    ConfigModule.forRoot(),
-    TypeOrmModule.forRoot({
-      // type: 'postgres',
-      // host: '172.187.177.240',
-      // port: 5050,
-      // password: 'zormor-demo',
-      // username: 'zormor-demo',
-      // entities: [Place, User],
-      // database: 'zormor-demo',
-      // synchronize: true,
-      // logging: true,
-
-      type: 'postgres',
-      host: 'localhost',
-      port: 5050,
-      password: 'zormor',
-      username: 'zormor',
-      // entities: [__dirname + '/../**/*.entity.{js,ts}'],
-      entities: [User, Place, Image],
-      database: 'zormor',
-      synchronize: true,
-      logging: true,
-      autoLoadEntities: true
-    }),
+      TypeOrmModule.forRootAsync({
+        imports: [ConfigModule], 
+        useFactory: async (configService: ConfigService) => {
+          return {
+            type: 'postgres',
+            host: configService.get<string>('DB_HOST'),
+            port: configService.get<number>('DB_PORT'),
+            username: configService.get<string>('DB_USER'),
+            password: configService.get<string>('DB_PASS'),
+            database: configService.get<string>('DB_NAME'),
+            entities: [User, Place, Image],
+            synchronize: true,
+            logging: true,
+            autoLoadEntities: true,
+            retryAttempts: 3, 
+            retryDelay: 1000,
+            extra: {
+              ssl: true 
+            }
+          };
+        },
+        inject: [ConfigService]
+      }),
+      
     PlaceModule,
     UserModule,
     ImageModule,
