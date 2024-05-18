@@ -2,12 +2,6 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type image {
-  id: Int!
-  filename: String!
-  place: place!
-}
-
 type place {
   name: String!
   description: String!
@@ -15,14 +9,12 @@ type place {
   latitude: String!
   longitude: String!
   hours: String!
-  images: [image!]
 }
 
 type User {
-  id: Int!
   email: String!
-  role: UserRole!
   password: String!
+  role: UserRole!
 }
 
 enum UserRole {
@@ -31,17 +23,15 @@ enum UserRole {
 }
 
 input UserInput {
-  id: Int!
   email: String!
-  role: UserRole!
   password: String!
+  role: UserRole!
 }
 
 type Query {
   places: [place!]!
   place(id: Float!): place!
   user(id: Int!): User!
-  image(id: Int!): image!
 }
 
 type Mutation {
@@ -51,23 +41,19 @@ type Mutation {
   createUser(createUserDto: CreateUserDto!): User!
   updateUser(updateUserDto: UpdateUserDto!): User!
   removeUser(id: Int!): User!
-  createImage(createImageInput: CreateImageInput!): image!
-  updateImage(updateImageInput: UpdateImageInput!): image!
-  removeImage(id: Int!): image!
 }
 
 input PlaceDto {
-  id: Int!
   name: String!
   description: String!
   location: String
   latitude: String
   longitude: String
   hours: String!
+  locationImage: String!
 }
 
 input UpdatePlaceDto {
-  id: Int!
   name: String
   description: String
   location: String
@@ -87,16 +73,4 @@ input UpdateUserDto {
   password: String
   role: UserRole
   id: Int!
-}
-
-input CreateImageInput {
-  filename: String!
-  placeId: Float!
-}
-
-input UpdateImageInput {
-  filename: String
-  placeId: Float
-  id: ID!
-  file: String!
 }

@@ -11,14 +11,6 @@ async function bootstrap() {
   // app.use(graphqlUploadExpress({ maxFileSize: 10000, maxFiles: 3 }));
   const port = process.env.PORT || 3000;
 
-  try {
-    await db.connect();
-    console.log('Connected to PostgreSQL database');
-  } catch (err) {
-    console.error('Unable to connect to the database:', err);
-    process.exit(1);
-  }
-
   await app.listen(port);
   Logger.log(`Application is running on: ${process.env.PORT}`);
 }

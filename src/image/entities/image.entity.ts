@@ -15,7 +15,7 @@ export class Image extends BaseEntity {
   filename: string;
 
   // Define many-to-one relationship with place
-  @ManyToOne(() => Place, (place) => place.images)
+  // @ManyToOne(() => Place, (place) => place.images)
   @Field(() => Place)
   place: Place;
 }

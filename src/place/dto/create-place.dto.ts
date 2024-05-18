@@ -10,13 +10,13 @@ export class PlaceDto extends BaseEntity {
   // @Field(() => Int)
   // id: number;
 
-  @IsNotEmpty()
+
   @IsString()
   @Field()
   @Length(3, 200)
   name: string;
 
-  @IsNotEmpty()
+
   @IsString()
   @Field()
   description: string;
@@ -37,6 +37,9 @@ export class PlaceDto extends BaseEntity {
   @Field()
   hours: string;
 
-  @Field(() => GraphQLUpload, {nullable: true, description: 'image file'}) 
-  imageFile?: Upload
+  // @Field(() => GraphQLUpload, {nullable: true, description: 'image file'}) 
+  // imageFile?: Upload
+
+  @Field()
+  locationImage: string;
 }

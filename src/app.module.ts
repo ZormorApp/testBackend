@@ -5,10 +5,8 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PlaceModule } from './place/place.module';
 import { UserModule } from './user/user.module';
-import { ImageModule } from './image/image.module';
 import { User } from './user/entities/user.entity';
 import { Place } from './place/entity/place.entity';
-import { Image } from './image/entities/image.entity';
 
 @Module({
   imports: [
@@ -30,7 +28,7 @@ import { Image } from './image/entities/image.entity';
             username: configService.get<string>('DB_USER'),
             password: configService.get<string>('DB_PASS'),
             database: configService.get<string>('DB_NAME'),
-            entities: [User, Place, Image],
+            entities: [User, Place],
             synchronize: true,
             logging: true,
             autoLoadEntities: true,
@@ -46,7 +44,7 @@ import { Image } from './image/entities/image.entity';
       
     PlaceModule,
     UserModule,
-    ImageModule,
+    // ImageModule,
   ],
   controllers: [],
   providers: [],

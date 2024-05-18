@@ -33,7 +33,10 @@ export class Place extends BaseEntity {
   @Column({type: 'varchar', })
   hours: string;
 
-  @OneToMany(() => Image, (image) => image.place, { nullable: true })
-  @Field(() => [Image], { nullable: true })
-  images: Image[];
+  // @OneToMany(() => Image, (image) => image.place, { nullable: true })
+  // @Field(() => [Image], { nullable: true })
+  // images: Image[];
+
+  @Column({nullable: true})
+  locationImage: string;
 }

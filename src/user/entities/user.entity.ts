@@ -1,11 +1,7 @@
 import { ObjectType, Field, InputType, registerEnumType } from '@nestjs/graphql';
 import { BaseEntity } from 'src/base-entity';
 import { Column, Entity } from 'typeorm';
-
-export enum UserRole {
-    ADMIN = 'admin',
-    USER = 'user'
-}
+import { UserRole } from '../models/user.interface';
 
 registerEnumType(UserRole, {
   name: 'UserRole',
@@ -23,11 +19,12 @@ export class User extends BaseEntity {
   @Field()
   email: string;
 
+  @Column()
+  @Field()
+  password: string;
+
   @Column({ type: 'enum', enum: UserRole, default: UserRole.USER })
   @Field(() => UserRole)
   role: UserRole;
 
-  @Column()
-  @Field()
-  password: string;
 }

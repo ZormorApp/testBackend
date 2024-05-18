@@ -28,6 +28,6 @@ export class UpdatePlaceDto extends BaseEntity {
   @Field({ nullable: true })
   hours?: string;
 
-  @Field(() => GraphQLUpload, {nullable: true, description: 'image file'}) 
-  imageFile?: Upload
+  // @Field(() => GraphQLUpload, {nullable: true, description: 'image file'}) 
+  // imageFile?: Upload
 }

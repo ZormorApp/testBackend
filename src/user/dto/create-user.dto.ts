@@ -1,6 +1,6 @@
 import { InputType, Field } from '@nestjs/graphql';
 import { IsEmail, IsNotEmpty, IsStrongPassword, Length, Matches, MinLength } from 'class-validator';
-import { UserRole } from '../entities/user.entity';
+import { UserRole } from '../models/user.interface';
 
 const passwordRegEx =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*d)(?=.*[@$!%*?&])[A-Za-zd@$!%*?&]{6,20}$/;
@@ -20,6 +20,6 @@ export class CreateUserDto {
   @Matches(passwordRegEx, {message: `Password must contain a minimum of 8 characters and maximum of 20 characters, at least one uppercase, one lowercase, one number and one special character`})
   password: string;
 
-  @Field((type)=> UserRole, {nullable: true})
+  @Field(()=> UserRole, {nullable: true})
   role: UserRole | null;
 }
