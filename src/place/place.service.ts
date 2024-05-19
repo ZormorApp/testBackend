@@ -23,3 +23,15 @@ export class PlaceService {
   findOne(id: string): Promise<Place | null> {
     return this.placeRepository.findOneBy({ id });
   }
+
+
+
+
+  update(id: string, updatePlaceInput: UpdatePlaceInput) {
+    return `This action updates a #${id} place`;
+  }
+
+ 
+  async remove(id: string): Promise<void> {
+    await this.placeRepository.delete(id);
+  }
