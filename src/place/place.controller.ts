@@ -63,8 +63,8 @@ export class PlaceController {
   }
 
   @Put(':id')
-  @Roles(UserRole.ADMIN)
-  @UseGuards(RoleGuard)
+  // @Roles(UserRole.ADMIN)
+  // @UseGuards(RoleGuard)
   async update(
     @Param('id') id: number,
     @Body() updatePlaceDto: UpdatePlaceDto,
@@ -73,8 +73,8 @@ export class PlaceController {
   }
 
   @Delete(':id')
-  @Roles(UserRole.ADMIN)
-  @UseGuards(RoleGuard)
+  // @Roles(UserRole.ADMIN)
+  // @UseGuards(RoleGuard)
   async remove(@Param('id') id: number) {
     return this.placeService.remove(id);
   }

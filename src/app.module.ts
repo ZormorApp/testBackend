@@ -8,6 +8,7 @@ import { PlaceModule } from './place/place.module';
 import { UserModule } from './user/user.module';
 import { User } from './user/entities/user.entity';
 import { Place } from './place/entity/place.entity';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -46,6 +47,7 @@ import { Place } from './place/entity/place.entity';
 
     PlaceModule,
     UserModule,
+    AuthModule,
     // ImageModule,
   ],
   controllers: [],

@@ -1,47 +1,58 @@
-import { Injectable } from '@nestjs/common';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
-import { InjectRepository } from '@nestjs/typeorm';
-import { User } from './entities/user.entity';
+import {
+  ConflictException,
+  Injectable,
+  InternalServerErrorException,
+} from '@nestjs/common';
+import { CreateUserInput } from './dto/create-user.input';
 import { Repository } from 'typeorm';
+import { User } from './entities/user.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+// import { UpdateUserInput } from './dto/update-user.input';
 
 @Injectable()
 export class UserService {
   constructor(
-    @InjectRepository(User) private readonly userRepository: Repository<User>,
+    @InjectRepository(User) private usersRepository: Repository<User>,
   ) {}
-  async create(createUserDto: CreateUserDto): Promise<User> {
-    const user: User = new User();
-    user.email = createUserDto.email;
-    user.password = createUserDto.password;
-    user.role = createUserDto.role;
-    return await this.userRepository.save(user);
+
+  async create(createUserInput: CreateUserInput) {
+    const { username, password } = createUserInput;
+    const user = this.usersRepository.create({ username, password });
+    try {
+      await this.usersRepository.save(user);
+      return user;
+    } catch (error) {
+      if (error.code === '23505') {
+        throw new ConflictException('Username already exists.');
+      } else {
+        throw new InternalServerErrorException();
+      }
+    }
+
+    // console.log(this.users);
+    // return user;
   }
 
-  async findOneByEmail(email: string): Promise<User | undefined> {
-    return this.userRepository.findOne({ where: { email } });
+  async findAll() {
+    // protect with jwt
+    return await this.usersRepository.find();
   }
 
-  findAllUsers(): Promise<User[]> {
-    return this.userRepository.find();
-  }
-
-  async findOneUser(id: number): Promise<User> {
-    const user = await this.userRepository.findOne({ where: { id } });
+  async findOne(username: string) {
+    // protect with jwt
+    // console.log(username);
+    const user = await this.usersRepository.findOne({ where: { username } });
+    // console.log(user);
     if (!user) {
-      throw `User with ID ${id} not found`;
+      return null;
     }
     return user;
   }
+  // update(id: number, updateUserInput: UpdateUserInput) {
+  //   return `This action updates a #${id} user`;
+  // }
 
-  updateUser(id: number, updateUserDto: UpdateUserDto): Promise<User> {
-    const user: User = new User();
-    user.email = updateUserDto.email;
-    user.password = updateUserDto.password;
-    return this.userRepository.save(user);
-  }
-
-  removeUser(id: number): Promise<{ affected?: number }> {
-    return this.userRepository.delete(id);
-  }
+  // remove(id: number) {
+  //   return `This action removes a #${id} user`;
+  // }
 }

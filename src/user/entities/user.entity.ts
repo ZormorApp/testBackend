@@ -1,6 +1,12 @@
-import { ObjectType, Field, InputType, registerEnumType } from '@nestjs/graphql';
+import {
+  ObjectType,
+  Field,
+  InputType,
+  registerEnumType,
+  ID,
+} from '@nestjs/graphql';
 import { BaseEntity } from 'src/base-entity';
-import { Column, Entity } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import { UserRole } from '../models/user.interface';
 
 registerEnumType(UserRole, {
@@ -10,14 +16,14 @@ registerEnumType(UserRole, {
 @Entity('users')
 @ObjectType()
 @InputType('UserInput')
-export class User extends BaseEntity {
-  // @PrimaryGeneratedColumn('uuid')
-  // @Field((type) => Int)
-  // id: number;
+export class User {
+  @PrimaryGeneratedColumn('uuid')
+  @Field(() => ID)
+  id: string;
 
   @Column({ unique: true })
   @Field()
-  email: string;
+  username: string;
 
   @Column()
   @Field()
@@ -26,5 +32,4 @@ export class User extends BaseEntity {
   @Column({ type: 'enum', enum: UserRole, default: UserRole.USER })
   @Field(() => UserRole)
   role: UserRole;
-
 }
