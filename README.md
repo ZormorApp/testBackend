@@ -47,15 +47,14 @@ $ npm run start:prod
 
 ## Test
 
+create a .env on the root directory of your project and set this parameters
+with a sample of .env.sample
+
 ```bash
 # unit tests
 $ npm run test
 
-# e2e tests
-$ npm run test:e2e
 
-# test coverage
-$ npm run test:cov
 ```
 
 ## Support
