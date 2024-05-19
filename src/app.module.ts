@@ -13,36 +13,37 @@ import { Place } from './place/entity/place.entity';
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: ['.env'], 
+      envFilePath: ['.env'],
     }),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: 'src/schema.gql',
     }),
-      TypeOrmModule.forRootAsync({
-        imports: [ConfigModule], 
-        useFactory: async (configService: ConfigService) => {
-          return {
-            type: 'postgres',
-            host: configService.get<string>('DB_HOST'),
-            port: configService.get<number>('DB_PORT'),
-            username: configService.get<string>('DB_USER'),
-            password: configService.get<string>('DB_PASS'),
-            database: configService.get<string>('DB_NAME'),
-            entities: [User, Place],
-            synchronize: true,
-            logging: true,
-            autoLoadEntities: true,
-            retryAttempts: 3, 
-            retryDelay: 1000,
-            extra: {
-              ssl: true 
-            }
-          };
-        },
-        inject: [ConfigService]
-      }),
-      
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: async (configService: ConfigService) => {
+        return {
+          type: 'postgres',
+          url: configService.get<string>('DATABASE_URL'),
+          // host: configService.get<string>('DB_HOST'),
+          // port: configService.get<number>('DB_PORT'),
+          // username: configService.get<string>('DB_USER'),
+          // password: configService.get<string>('DB_PASS'),
+          // database: configService.get<string>('DB_NAME'),
+          entities: [User, Place],
+          synchronize: true,
+          logging: true,
+          autoLoadEntities: true,
+          retryAttempts: 3,
+          retryDelay: 1000,
+          extra: {
+            ssl: true,
+          },
+        };
+      },
+      inject: [ConfigService],
+    }),
+
     PlaceModule,
     UserModule,
     // ImageModule,
@@ -50,4 +51,11 @@ import { Place } from './place/entity/place.entity';
   controllers: [],
   providers: [],
 })
-export class AppModule {}
+export class AppModule {
+  constructor(private dataSource: DataSource) {
+    console.log(this.dataSource);
+  }
+  configure() {
+    console.log('hello ');
+  }
+}

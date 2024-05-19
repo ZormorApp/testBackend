@@ -14,7 +14,7 @@ export class PlaceService {
 
   async getAll(): Promise<Place[]> {
     const places = await this.placeRepository.find();
-    return places
+    return places;
   }
 
   async getOne(id: number): Promise<Place> {
@@ -34,19 +34,43 @@ export class PlaceService {
       return undefined;
     }
 
-    placeUpdate.name = updatePlaceDto.name;
-    placeUpdate.description = updatePlaceDto.description;
-    placeUpdate.location = updatePlaceDto.location;
-    placeUpdate.latitude = updatePlaceDto.latitude;
-    placeUpdate.longitude = updatePlaceDto.longitude;
-    placeUpdate.hours = updatePlaceDto.hours;
+    const { name, description, location, longitude, latitude, hours } =
+      updatePlaceDto;
+    if (name) {
+      placeUpdate.name = name;
+    }
+
+    if (description) {
+      placeUpdate.description = description;
+    }
+
+    if (location) {
+      placeUpdate.location = location;
+    }
+
+    if (longitude) {
+      placeUpdate.longitude = longitude;
+    }
+
+    if (latitude) {
+      placeUpdate.latitude = updatePlaceDto.latitude;
+    }
+
+    if (hours) {
+      placeUpdate.hours = hours;
+    }
+
+    // placeUpdate.location = updatePlaceDto.location;
+    // placeUpdate.latitude = updatePlaceDto.latitude;
+    // placeUpdate.longitude = updatePlaceDto.longitude;
+    // placeUpdate.hours = updatePlaceDto.hours;
 
     await this.placeRepository.save(placeUpdate);
 
     return placeUpdate;
   }
 
-  async remove(id: number): Promise<void> {
+  async remove(id: number) {
     const placeToRemove = await this.placeRepository.findOne({ where: { id } });
 
     if (!placeToRemove) {
@@ -54,5 +78,7 @@ export class PlaceService {
     }
 
     await this.placeRepository.remove(placeToRemove);
+
+    return placeToRemove;
   }
 }

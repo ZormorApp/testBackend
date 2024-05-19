@@ -10,13 +10,16 @@ export class UserService {
   constructor(
     @InjectRepository(User) private readonly userRepository: Repository<User>,
   ) {}
-  
   async create(createUserDto: CreateUserDto): Promise<User> {
     const user: User = new User();
     user.email = createUserDto.email;
     user.password = createUserDto.password;
     user.role = createUserDto.role;
     return await this.userRepository.save(user);
+  }
+
+  async findOneByEmail(email: string): Promise<User | undefined> {
+    return this.userRepository.findOne({ where: { email } });
   }
 
   findAllUsers(): Promise<User[]> {
@@ -26,7 +29,7 @@ export class UserService {
   async findOneUser(id: number): Promise<User> {
     const user = await this.userRepository.findOne({ where: { id } });
     if (!user) {
-      throw (`User with ID ${id} not found`);
+      throw `User with ID ${id} not found`;
     }
     return user;
   }
@@ -35,10 +38,10 @@ export class UserService {
     const user: User = new User();
     user.email = updateUserDto.email;
     user.password = updateUserDto.password;
-    return this.userRepository.save(user)
+    return this.userRepository.save(user);
   }
 
-  removeUser(id: number): Promise<{affected?: number}> {
-    return  this.userRepository.delete(id);
+  removeUser(id: number): Promise<{ affected?: number }> {
+    return this.userRepository.delete(id);
   }
 }
