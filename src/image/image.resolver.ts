@@ -1,8 +1,9 @@
 import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
 import { ImageService } from './image.service';
 import { Image } from './entities/image.entity';
-import { CreateImageInput } from './dto/create-image.input';
-import { UpdateImageInput } from './dto/update-image.input';
+import { CreateImageInput } from './dto/create-image.dto';
+import { UpdateImageInput } from './dto/update-image.dto';
+
 
 @Resolver(() => Image)
 export class ImageResolver {

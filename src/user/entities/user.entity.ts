@@ -1,22 +1,30 @@
-import { ObjectType, Field, ID } from '@nestjs/graphql';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { ObjectType, Field, InputType, registerEnumType } from '@nestjs/graphql';
+import { BaseEntity } from 'src/base-entity';
+import { Column, Entity } from 'typeorm';
+import { UserRole } from '../models/user.interface';
 
-@Entity()
-@ObjectType('User')
-export class User {
-  @PrimaryGeneratedColumn('uuid')
-  @Field(() => ID)
-  id: string;
+registerEnumType(UserRole, {
+  name: 'UserRole',
+});
+
+@Entity('users')
+@ObjectType()
+@InputType('UserInput')
+export class User extends BaseEntity {
+  // @PrimaryGeneratedColumn('uuid')
+  // @Field((type) => Int)
+  // id: number;
 
   @Column({ unique: true })
   @Field()
   email: string;
 
-  @Column({ nullable: true, default: false })
-  @Field({ nullable: true })
-  is_admin: boolean;
-
   @Column()
   @Field()
   password: string;
+
+  @Column({ type: 'enum', enum: UserRole, default: UserRole.USER })
+  @Field(() => UserRole)
+  role: UserRole;
+
 }

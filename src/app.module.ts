@@ -4,50 +4,50 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { join } from 'path';
 import { PlaceModule } from './place/place.module';
 import { UserModule } from './user/user.module';
-import { ImageModule } from './image/image.module';
-import { AuthModule } from './auth/auth.module';
+import { User } from './user/entities/user.entity';
+import { Place } from './place/entity/place.entity';
+
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: ['.env'],
+    }),
     GraphQLModule.forRoot<ApolloDriverConfig>({
-      autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
-      playground: true,
       driver: ApolloDriver,
-      context: ({ req }) => ({ req }),
+      autoSchemaFile: 'src/schema.gql',
     }),
-    ConfigModule.forRoot(),
-    TypeOrmModule.forRootAsync({
-      imports: [ConfigModule],
-      inject: [ConfigService],
-      useFactory: async (configService: ConfigService) => ({
-        type: 'postgres',
-        url: 'postgres://zormor:UJPs4DiyvyFRnhrXCh64HjN6zRMncebC@dpg-cp3i5o8l6cac73f63be0-a.oregon-postgres.render.com/zormor_db',
-        // host: configService.get<string>('POSTGRES_HOST'),
-        // port: configService.get<number>('POSTGRES_PORT'),
-        // username: configService.get<string>('POSTGRES_USER'),
-        // password: configService.get<string>('POSTGRES_PASSWORD'),
-        // database: configService.get<string>('POSTGRES_DATABASE'),
-        autoLoadEntities: true,
-        synchronize: true,
-        entities: [join(process.cwd(), 'dist/**/*.entity.js')],
+      TypeOrmModule.forRootAsync({
+        imports: [ConfigModule],
+        useFactory: async (configService: ConfigService) => {
+          return {
+            type: 'postgres',
+            host: configService.get<string>('DB_HOST'),
+            port: configService.get<number>('DB_PORT'),
+            username: configService.get<string>('DB_USER'),
+            password: configService.get<string>('DB_PASS'),
+            database: configService.get<string>('DB_NAME'),
+            entities: [User, Place],
+            synchronize: true,
+            logging: true,
+            autoLoadEntities: true,
+            retryAttempts: 3,
+            retryDelay: 1000,
+            extra: {
+              ssl: true
+            }
+          };
+        },
+        inject: [ConfigService]
       }),
-    }),
+
     PlaceModule,
     UserModule,
-    ImageModule,
-    // AuthModule,
+    // ImageModule,
   ],
   controllers: [],
   providers: [],
 })
-export class AppModule {
-  constructor(private readonly dataSource: DataSource) {
-    console.log(this.dataSource);
-  }
-
-  configure() {
-    console.log('AppModule configured');
-  }
-}
+export class AppModule {}

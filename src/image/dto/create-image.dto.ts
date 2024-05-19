@@ -10,5 +10,5 @@ export class CreateImageInput {
 
   @Field() // Decorate placeId field with @Field() to expose in GraphQL schema
   @IsNotEmpty()
-  placeId: string;
+  placeId: number;
 }

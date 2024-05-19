@@ -2,86 +2,75 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type Image {
-  id: Float!
-  filename: String!
-  place: Place!
-}
-
-type Place {
-  id: ID!
+type place {
   name: String!
   description: String!
   location: String!
   latitude: String!
   longitude: String!
-  open_hours: String!
-  images: [Image!]
+  hours: String!
 }
 
 type User {
-  id: ID!
   email: String!
-  is_admin: Boolean
   password: String!
+  role: UserRole!
+}
+
+enum UserRole {
+  ADMIN
+  USER
+}
+
+input UserInput {
+  email: String!
+  password: String!
+  role: UserRole!
 }
 
 type Query {
-  place(id: String!): Place!
+  places: [place!]!
+  place(id: Float!): place!
   user(id: Int!): User!
-  image(id: Int!): Image!
 }
 
 type Mutation {
-  createPlace(createPlaceInput: CreatePlaceInput!): Place!
-  updatePlace(updatePlaceInput: UpdatePlaceInput!): Place!
-  removePlace(id: String!): Place!
-  createUser(createUserInput: CreateUserInput!): User!
-  updateUser(updateUserInput: UpdateUserInput!): User!
+  createPlace(createPlaceInput: PlaceDto!): place!
+  updatePlace(updatePlaceInput: UpdatePlaceDto!): place!
+  removePlace(id: Float!): place!
+  createUser(createUserDto: CreateUserDto!): User!
+  updateUser(updateUserDto: UpdateUserDto!): User!
   removeUser(id: Int!): User!
-  createImage(createImageInput: CreateImageInput!): Image!
-  updateImage(updateImageInput: UpdateImageInput!): Image!
-  removeImage(id: Int!): Image!
 }
 
-input CreatePlaceInput {
+input PlaceDto {
   name: String!
   description: String!
-  location: String!
-  latitude: String!
-  longitude: String!
-  open_hours: String!
+  location: String
+  latitude: String
+  longitude: String
+  hours: String!
+  locationImage: String!
 }
 
-input UpdatePlaceInput {
+input UpdatePlaceDto {
   name: String
   description: String
   location: String
   latitude: String
   longitude: String
-  open_hours: String
-  id: ID!
+  hours: String
 }
 
-input CreateUserInput {
+input CreateUserDto {
   email: String!
   password: String!
+  role: UserRole
 }
 
-input UpdateUserInput {
+input UpdateUserDto {
   email: String
   password: String
+  role: UserRole
   id: Int!
-}
-
-input CreateImageInput {
-  filename: String!
-  placeId: String!
-}
-
-input UpdateImageInput {
-  filename: String
-  placeId: String
-  id: ID!
-  file: String!
 }
