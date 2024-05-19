@@ -6,9 +6,6 @@ import { BaseEntity } from 'src/base-entity';
 @Entity()
 @ObjectType('place')
 export class Place extends BaseEntity {
-  // @PrimaryGeneratedColumn()
-  // id: number;
-
   @Field()
   @Column({type: 'varchar', length: 40})
   name: string;
@@ -32,10 +29,6 @@ export class Place extends BaseEntity {
   @Field()
   @Column({type: 'varchar', })
   hours: string;
-
-  // @OneToMany(() => Image, (image) => image.place, { nullable: true })
-  // @Field(() => [Image], { nullable: true })
-  // images: Image[];
 
   @Column({nullable: true})
   locationImage: string;

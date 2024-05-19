@@ -37,9 +37,6 @@ export class PlaceDto extends BaseEntity {
   @Field()
   hours: string;
 
-  // @Field(() => GraphQLUpload, {nullable: true, description: 'image file'}) 
-  // imageFile?: Upload
-
   @Field()
   locationImage: string;
 }

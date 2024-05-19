@@ -1,5 +1,4 @@
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
-import { DataSource } from 'typeorm';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
@@ -8,6 +7,7 @@ import { PlaceModule } from './place/place.module';
 import { UserModule } from './user/user.module';
 import { User } from './user/entities/user.entity';
 import { Place } from './place/entity/place.entity';
+import { JwtStrategy } from './auth/jwt.strategy';
 
 @Module({
   imports: [
@@ -18,6 +18,7 @@ import { Place } from './place/entity/place.entity';
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: 'src/schema.gql',
+      playground: true
     }),
       TypeOrmModule.forRootAsync({
         imports: [ConfigModule], 
@@ -45,7 +46,6 @@ import { Place } from './place/entity/place.entity';
       
     PlaceModule,
     UserModule,
-    // ImageModule,
   ],
   controllers: [],
   providers: [],

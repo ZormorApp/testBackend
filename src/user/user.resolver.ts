@@ -3,36 +3,39 @@ import { UserService } from './user.service';
 import { User } from './entities/user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { UseGuards } from '@nestjs/common';
-import { RoleGuard } from './user.guard';
+import { UserRole } from './models/user.interface';
+import { Roles } from './user.decorator';
 
 @Resolver(() => User)
 export class UserResolver {
   constructor(private readonly userService: UserService) {}
 
   @Mutation(() => User)
-  @UseGuards(RoleGuard)
-  createUser(@Args('createUserDto') createUserDto: CreateUserDto) {
-    return this.userService.create(createUserDto);
+  @Roles(UserRole.ADMIN)
+  async createUser(@Args('createUserDto') createUserDto: CreateUserDto): Promise<User> {
+    return await this.userService.create(createUserDto);
   }
 
-  @Query(() => [User], { name: 'user' })
-  findAll() {
-    return this.userService.findAllUsers();
+  @Query(() => [User], { name: 'users' })
+  async findAll(): Promise<User[]> {
+    return await this.userService.findAllUsers();
   }
 
   @Query(() => User, { name: 'user' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
-    return this.userService.findOneUser(id);
+  async findOne(@Args('id', { type: () => Int }) id: number): Promise<User> {
+    return await this.userService.findOneUser(id);
   }
 
   @Mutation(() => User)
-  updateUser(@Args('updateUserDto') updateUserDto: UpdateUserDto) {
-    return this.userService.updateUser(updateUserDto.id, updateUserDto);
+  @Roles(UserRole.ADMIN)
+  async updateUser(@Args('updateUserDto') updateUserDto: UpdateUserDto): Promise<User> {
+    return await this.userService.updateUser(updateUserDto.id, updateUserDto);
   }
 
-  @Mutation(() => User)
-  removeUser(@Args('id', { type: () => Int }) id: number) {
-    return this.userService.removeUser(id);
+  @Mutation(() => Boolean)
+  @Roles(UserRole.ADMIN)
+  async removeUser(@Args('id', { type: () => Int }) id: number): Promise<boolean> {
+    await this.userService.remove(id)
+    return true;
   }
 }

@@ -27,22 +27,32 @@ export class PlaceService {
     return newPlace;
   }
 
+  // async update(id: number, updatePlaceDto: UpdatePlaceDto): Promise<Place> {
+  //   const placeUpdate = await this.placeRepository.findOne({ where: { id } });
+
+  //   if (!placeUpdate) {
+  //     return undefined;
+  //   }
+
+  //   placeUpdate.name = updatePlaceDto.name;
+  //   placeUpdate.description = updatePlaceDto.description;
+  //   placeUpdate.location = updatePlaceDto.location;
+  //   placeUpdate.latitude = updatePlaceDto.latitude;
+  //   placeUpdate.longitude = updatePlaceDto.longitude;
+  //   placeUpdate.hours = updatePlaceDto.hours;
+
+  //   await this.placeRepository.save(placeUpdate);
+
+  //   return placeUpdate;
+  // }
+
   async update(id: number, updatePlaceDto: UpdatePlaceDto): Promise<Place> {
     const placeUpdate = await this.placeRepository.findOne({ where: { id } });
-
     if (!placeUpdate) {
-      return undefined;
+      throw new NotFoundException(`Place with ID ${id} not found`);
     }
-
-    placeUpdate.name = updatePlaceDto.name;
-    placeUpdate.description = updatePlaceDto.description;
-    placeUpdate.location = updatePlaceDto.location;
-    placeUpdate.latitude = updatePlaceDto.latitude;
-    placeUpdate.longitude = updatePlaceDto.longitude;
-    placeUpdate.hours = updatePlaceDto.hours;
-
+    Object.assign(placeUpdate, updatePlaceDto);
     await this.placeRepository.save(placeUpdate);
-
     return placeUpdate;
   }
 

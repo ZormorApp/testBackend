@@ -13,7 +13,7 @@ export class PlaceResolver {
         return await this.placeService.getAll()
     }
 
-    @Mutation(returns => Place)
+    @Mutation(() => Place)
     async createPlace(@Args('createPlaceInput') createPlaceDto: PlaceDto): Promise<Place> {
         return await this.placeService.create(createPlaceDto)
     }
