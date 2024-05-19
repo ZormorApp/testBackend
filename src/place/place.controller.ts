@@ -30,7 +30,6 @@ export class PlaceController {
     async getOne(@Param('id') id: number): Promise<Place> {
         console.log(id)
         return this.placeService.getOne(id)
-      
     }
 
 //     @Post() 

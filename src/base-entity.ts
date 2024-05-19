@@ -2,7 +2,7 @@ import { Field, Int } from '@nestjs/graphql';
 import { Column, CreateDateColumn, PrimaryGeneratedColumn } from 'typeorm';
 
 export class BaseEntity {
-    @PrimaryGeneratedColumn()
+    @PrimaryGeneratedColumn('uuid')
     @Field(()=>Int)
     id: number;
 
