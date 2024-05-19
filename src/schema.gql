@@ -3,12 +3,14 @@
 # ------------------------------------------------------
 
 type place {
+  id: Int!
   name: String!
   description: String!
   location: String!
   latitude: String!
   longitude: String!
   hours: String!
+  locationImage: String
 }
 
 type User {
@@ -50,10 +52,11 @@ input PlaceDto {
   latitude: String
   longitude: String
   hours: String!
-  locationImage: String!
+  locationImage: String
 }
 
 input UpdatePlaceDto {
+  id: Float!
   name: String
   description: String
   location: String

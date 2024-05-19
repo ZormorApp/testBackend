@@ -9,6 +9,8 @@ export class UpdatePlaceDto extends BaseEntity {
 // @Field(()=> Int)
 // @IsUUID()
 // id: number;
+  @Field()
+  declare id: number;
 
   @Field({ nullable: true })
   name?: string;
@@ -28,6 +30,6 @@ export class UpdatePlaceDto extends BaseEntity {
   @Field({ nullable: true })
   hours?: string;
 
-  // @Field(() => GraphQLUpload, {nullable: true, description: 'image file'}) 
+  // @Field(() => GraphQLUpload, {nullable: true, description: 'image file'})
   // imageFile?: Upload
 }
