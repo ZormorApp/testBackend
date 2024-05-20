@@ -18,16 +18,15 @@ import { Place } from './place/entity/place.entity';
       driver: ApolloDriver,
       autoSchemaFile: 'src/schema.gql',
       playground: false,
-      // context: async ({ req, connection }) => {
-      //   if (connection) {
-      //     return connection.context;
-      //   } else {
-      //     return { headers: req.headers };
-      //   }
-      // },
+      context: async ({ req, connection }) => {
+        if (connection) {
+          return connection.context;
+        } else {
+          return { headers: req.headers };
+        }
+      },
       sortSchema: true,
       introspection: true,
-      csrfPrevention: true, 
     }),
       TypeOrmModule.forRootAsync({
         imports: [ConfigModule], 
