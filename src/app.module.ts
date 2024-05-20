@@ -12,13 +12,12 @@ import { Place } from './place/entity/place.entity';
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: ['.env'],
+      envFilePath: ['.env'], 
     }),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: 'src/schema.gql',
-      playground: process.env.NODE_ENV !== 'production',
-      introspection: process.env.NODE_ENV !== 'production',
+      playground: false,
       context: async ({ req, connection }) => {
         if (connection) {
           return connection.context;
@@ -27,28 +26,33 @@ import { Place } from './place/entity/place.entity';
         }
       },
       sortSchema: true,
+      introspection: true,
+      csrfPrevention: true, 
     }),
-    TypeOrmModule.forRootAsync({
-      imports: [ConfigModule],
-      useFactory: async (configService: ConfigService) => ({
-        type: 'postgres',
-        host: configService.get<string>('DB_HOST'),
-        port: configService.get<number>('DB_PORT'),
-        username: configService.get<string>('DB_USER'),
-        password: configService.get<string>('DB_PASS'),
-        database: configService.get<string>('DB_NAME'),
-        entities: [User, Place],
-        synchronize: true,
-        logging: true,
-        autoLoadEntities: true,
-        retryAttempts: 3,
-        retryDelay: 1000,
-        extra: {
-          ssl: true,
+      TypeOrmModule.forRootAsync({
+        imports: [ConfigModule], 
+        useFactory: async (configService: ConfigService) => {
+          return {
+            type: 'postgres',
+            host: configService.get<string>('DB_HOST'),
+            port: configService.get<number>('DB_PORT'),
+            username: configService.get<string>('DB_USER'),
+            password: configService.get<string>('DB_PASS'),
+            database: configService.get<string>('DB_NAME'),
+            entities: [User, Place],
+            synchronize: true,
+            logging: true,
+            autoLoadEntities: true,
+            retryAttempts: 3, 
+            retryDelay: 1000,
+            extra: {
+              ssl: true 
+            }
+          };
         },
+        inject: [ConfigService]
       }),
-      inject: [ConfigService],
-    }),
+      
     PlaceModule,
     UserModule,
   ],
