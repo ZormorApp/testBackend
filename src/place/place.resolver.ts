@@ -7,6 +7,7 @@ import { UnauthorizedException, UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { UserService } from 'src/user/user.service';
 import { UserRole } from 'src/user/models/user.interface';
+import { GetPlaceIdDto } from './dto/get-place-id.dto';
 
 @Resolver()
 export class PlaceResolver {
@@ -41,9 +42,10 @@ export class PlaceResolver {
 
   @Query(() => Place, { name: 'place' })
   async findOne(
-    @Args('id', { type: () => Number }) id: number,
+    // @Args('id', { type: () => Number }) id: number,
+    @Args('getPlaceIdDto') getPlaceIdDto: GetPlaceIdDto,
   ): Promise<Place> {
-    return await this.placeService.getOne(id);
+    return await this.placeService.getOne(getPlaceIdDto.id);
   }
 
   @Mutation(() => Place)
@@ -66,7 +68,8 @@ export class PlaceResolver {
   @Mutation(() => Place)
   @UseGuards(JwtAuthGuard)
   async removePlace(
-    @Args('id', { type: () => Number }) id: number,
+    // @Args('id', { type: () => Number }) id: number,
+    @Args('getPlaceIdDto') getPlaceIdDto: GetPlaceIdDto,
     @Context() context: any,
   ) {
     // console.log(context.req.user);
@@ -77,6 +80,6 @@ export class PlaceResolver {
     if (user.role != UserRole.ADMIN) {
       throw new UnauthorizedException('Unauthorize user ');
     }
-    return await this.placeService.remove(id);
+    return await this.placeService.remove(getPlaceIdDto.id);
   }
 }
