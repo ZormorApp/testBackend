@@ -4,9 +4,9 @@ import { Place } from "./entity/place.entity";
 import { PlaceDto } from "./dto/create-place.dto";
 import { UpdatePlaceDto } from "./dto/update-place.dto";
 
-@Resolver()
+@Resolver(() => Place)
 export class PlaceResolver {
-    constructor(private placeService: PlaceService) {}
+  constructor(private readonly placeService: PlaceService) {}
 
     @Query(() => [Place])
     async places(): Promise<Place[]> {
