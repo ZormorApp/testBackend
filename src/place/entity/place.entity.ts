@@ -7,7 +7,7 @@ import { BaseEntity } from 'src/base-entity';
 @ObjectType('place')
 export class Place {
   @PrimaryGeneratedColumn()
-  @Field()
+  @Field(() => Int)
   id: number;
 
   @Field()

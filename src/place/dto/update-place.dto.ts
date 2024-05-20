@@ -9,7 +9,7 @@ export class UpdatePlaceDto extends BaseEntity {
 // @Field(()=> Int)
 // @IsUUID()
 // id: number;
-  @Field()
+  @Field(() => Int)
   declare id: number;
 
   @Field({ nullable: true })

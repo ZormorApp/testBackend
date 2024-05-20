@@ -3,7 +3,7 @@
 # ------------------------------------------------------
 
 type place {
-  id: Float!
+  id: Int!
   name: String!
   description: String!
   location: String!
@@ -39,15 +39,19 @@ input UserInput {
 
 type Query {
   places: [place!]!
-  place(id: Float!): place!
+  place(getPlaceIdDto: GetPlaceIdDto!): place!
   users: [User!]!
   user(username: String!): User!
+}
+
+input GetPlaceIdDto {
+  id: Int!
 }
 
 type Mutation {
   createPlace(createPlaceInput: PlaceDto!): place!
   updatePlace(updatePlaceInput: UpdatePlaceDto!): place!
-  removePlace(id: Float!): place!
+  removePlace(getPlaceIdDto: GetPlaceIdDto!): place!
   login(loginUserInput: LoginUserInput!): LoginResponse!
   signup(loginUserInput: LoginUserInput!): User!
 }
@@ -63,7 +67,7 @@ input PlaceDto {
 }
 
 input UpdatePlaceDto {
-  id: Float!
+  id: Int!
   name: String
   description: String
   location: String
