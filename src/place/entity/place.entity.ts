@@ -8,7 +8,7 @@ import { BaseEntity } from 'src/base-entity';
 export class Place {
   @PrimaryGeneratedColumn()
   @Field()
-  id: string;
+  id: number;
 
   @Field()
   @Column({ type: 'varchar', length: 40, unique: true })
