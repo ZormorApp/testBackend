@@ -7,7 +7,6 @@ import { PlaceModule } from './place/place.module';
 import { UserModule } from './user/user.module';
 import { User } from './user/entities/user.entity';
 import { Place } from './place/entity/place.entity';
-import { JwtStrategy } from './auth/jwt.strategy';
 
 @Module({
   imports: [
@@ -18,7 +17,16 @@ import { JwtStrategy } from './auth/jwt.strategy';
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: 'src/schema.gql',
-      playground: true
+      playground: false,
+      context: async ({ req, connection }) => {
+        if (connection) {
+          return connection.context;
+        } else {
+          return { headers: req.headers };
+        }
+      },
+      sortSchema: true,
+      introspection: true,
     }),
       TypeOrmModule.forRootAsync({
         imports: [ConfigModule], 

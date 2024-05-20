@@ -2,16 +2,61 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type place {
-  name: String!
+input CreateUserDto {
+  email: String!
+  password: String!
+  role: UserRole
+}
+
+type Mutation {
+  createPlace(createPlaceInput: PlaceDto!): place!
+  createUser(createUserDto: CreateUserDto!): User!
+  removePlace(id: Float!): place!
+  removeUser(id: Int!): Boolean!
+  updatePlace(updatePlaceInput: UpdatePlaceDto!): place!
+  updateUser(updateUserDto: UpdateUserDto!): User!
+}
+
+input PlaceDto {
   description: String!
-  location: String!
-  latitude: String!
-  longitude: String!
   hours: String!
+  latitude: String
+  location: String
+  locationImage: String!
+  longitude: String
+  name: String!
+}
+
+type Query {
+  place(id: Float!): place!
+  places: [place!]!
+  user(id: Int!): User!
+  users: [User!]!
+}
+
+input UpdatePlaceDto {
+  description: String
+  hours: String
+  latitude: String
+  location: String
+  longitude: String
+  name: String
+}
+
+input UpdateUserDto {
+  email: String
+  id: Int!
+  password: String
+  role: UserRole
 }
 
 type User {
+  email: String!
+  password: String!
+  role: UserRole!
+}
+
+input UserInput {
   email: String!
   password: String!
   role: UserRole!
@@ -22,56 +67,11 @@ enum UserRole {
   USER
 }
 
-input UserInput {
-  email: String!
-  password: String!
-  role: UserRole!
-}
-
-type Query {
-  places: [place!]!
-  place(id: Float!): place!
-  users: [User!]!
-  user(id: Int!): User!
-}
-
-type Mutation {
-  createPlace(createPlaceInput: PlaceDto!): place!
-  updatePlace(updatePlaceInput: UpdatePlaceDto!): place!
-  removePlace(id: Float!): place!
-  createUser(createUserDto: CreateUserDto!): User!
-  updateUser(updateUserDto: UpdateUserDto!): User!
-  removeUser(id: Int!): Boolean!
-}
-
-input PlaceDto {
-  name: String!
+type place {
   description: String!
-  location: String
-  latitude: String
-  longitude: String
   hours: String!
-  locationImage: String!
-}
-
-input UpdatePlaceDto {
-  name: String
-  description: String
-  location: String
-  latitude: String
-  longitude: String
-  hours: String
-}
-
-input CreateUserDto {
-  email: String!
-  password: String!
-  role: UserRole
-}
-
-input UpdateUserDto {
-  email: String
-  password: String
-  role: UserRole
-  id: Int!
+  latitude: String!
+  location: String!
+  longitude: String!
+  name: String!
 }

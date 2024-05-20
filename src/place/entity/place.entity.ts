@@ -7,15 +7,15 @@ import { BaseEntity } from 'src/base-entity';
 @ObjectType('place')
 export class Place extends BaseEntity {
   @Field()
-  @Column({type: 'varchar', length: 40})
+  @Column({type: 'varchar', length: 100})
   name: string;
 
   @Field()
-  @Column({type: 'varchar', length: 40})
+  @Column({type: 'varchar', length: 100})
   description: string;
 
   @Field()
-  @Column({type: 'varchar', length: 140})
+  @Column({type: 'varchar', length: 200})
   location: string;
 
   @Field()
