@@ -3,7 +3,7 @@
 # ------------------------------------------------------
 
 type place {
-  id: Int!
+  id: Float!
   name: String!
   description: String!
   location: String!
